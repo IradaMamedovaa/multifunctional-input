@@ -2,9 +2,9 @@ import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import Select from "react-select";
 
-import useFormulaStore from "../../utils/store/store";
+import useFormulaStore from "utils/store/store";
 
-const operands = ["*", "=", "+", "-"];
+const operands = ["*", "=", "+", "-", "(", ")", "/", ":", ",", "^"];
 
 const CustomInput = ({ value }) => {
   const { isPending, error, data } = useQuery({
@@ -30,19 +30,18 @@ const CustomInput = ({ value }) => {
 
   if (error) return "An error has occurred: " + error.message;
 
-
   const handleKeyDown = (e) => {
     if (e.key === "ArrowLeft") {
       cursorPosition !== 0 && updateCursorPosition(cursorPosition - 1);
     } else if (e.key === "ArrowRight") {
       cursorPosition !== value.length &&
         updateCursorPosition(cursorPosition + 1);
-    } else if (operands.includes(e.key)){
-      return '' // TODO
+    } else if (operands.includes(e.key)) {
+      return ""; // TODO
     }
   };
 
-console.log(cursorPosition)
+  console.log(cursorPosition);
   return (
     <div className="CustomInputContainer">
       <Select
@@ -60,7 +59,7 @@ console.log(cursorPosition)
           console.log("newValue: ", newValue);
         }}
       >
-        <input className={'input'}/>
+        <input className={"input"} />
       </Select>
     </div>
   );
