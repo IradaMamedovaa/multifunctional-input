@@ -1,24 +1,20 @@
-import logo from './logo.svg';
-import './App.css';
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import CustomInput from "./components/custom-input/CustomInput";
+import useFormulaStore from "./utils/store/store";
+// import CustomMultiSelectWithCodeMirror from "./components/custom-input/CustomInput";
+const queryClient = new QueryClient();
 
 function App() {
+  const inputValue = useFormulaStore((state) => state.formula);
+
+  console.log('inputValue: ',inputValue)
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <QueryClientProvider client={queryClient}>
+      <div className="App">
+        <CustomInput value={inputValue} />
+        {/*  <CustomMultiSelectWithCodeMirror/>*/}
+      </div>
+    </QueryClientProvider>
   );
 }
 
